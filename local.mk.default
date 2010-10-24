@@ -1,0 +1,5 @@
+DB_ENGINE = postgresql_psycopg2
+DB_NAME = wolo
+DB_USER = wolo
+DB_PASSWORD = secret
+DB_HOST = localhost

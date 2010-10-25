@@ -2,9 +2,13 @@ SHELL = /bin/sh
 
 include local.mk
 
-all: local.mk settings.py
+all: settings.py
 
-settings.py: settings.py.in
+.PHONY: run
+run: settings.py
+	python manage.py runserver
+
+settings.py: local.mk settings.py.in
 	sed -e 's/_DB_ENGINE_/$(DB_ENGINE)/' \
 	    -e 's/_DB_NAME_/$(DB_NAME)/' \
 	    -e 's/_DB_USER_/$(DB_USER)/' \

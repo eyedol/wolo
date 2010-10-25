@@ -22,4 +22,4 @@ local.mk:
 
 clean:
 	rm -f settings.py
-	rm -f *py
+	rm -f *pyc

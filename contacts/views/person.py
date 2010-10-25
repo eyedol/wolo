@@ -1,11 +1,11 @@
 from django.core.urlresolvers import reverse
-from django.template.defaulfilters import slugify
+from django.template.defaultfilters import slugify
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
-from django.http import Htt404, HttpResponseForbidden,HttpResponseServerError, HttpResponseRedirect
+from django.http import Http404, HttpResponseForbidden,HttpResponseServerError, HttpResponseRedirect
 
-from contacts.models import Person, Group
-from contacts.views import small_render_to_response
-from contacts.forms import PersonCreateForm, PersonUpdateForm
+from contacts.models import Person
+from django.shortcuts import render_to_response
+from wolo.contacts.forms import PersonAddForm, PersonUpdateForm
 
 def add(request, template_name='contacts/person/add.html'):
     user = request.user
@@ -27,5 +27,5 @@ def add(request, template_name='contacts/person/add.html'):
         'form':PersonAddForm(request.POST)
     }
 
-    return small_render_to_response(request, template_name, context)
+    return render_to_response(request, template_name, context)
 

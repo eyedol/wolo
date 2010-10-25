@@ -1,8 +1,8 @@
 from django import forms
-from django.froms import ModelForm, Form
+from django.forms import ModelForm, Form
 from django.contrib.contenttypes.generic import generic_inlineformset_factory as inlineformset_factory
 
-from contacts.models import Company, Person, Group, PhoneNumber,EmailAddress, InstantMessenger, WebSite, StreetAddress
+from contacts.models import Company, Person, PhoneNumber,EmailAddress, InstantMessenger, WebSite, StreetAddress
 
 class CompanyCreateForm(ModelForm):
     model = Company
@@ -24,12 +24,12 @@ class PersonUpdateForm(ModelForm):
 
 class GroupCreateForm(ModelForm):
     class Meta:
-        model = Group
+        #model = Group
         fields = ('name','about')
 
 class GroupUpdateForm(ModelForm):
     class Meta:
-        model = Group
+        #model = Group
         exclude = ('slug',)
 
 PhoneNumberFormSet = inlineformset_factory(PhoneNumber, extra=1)

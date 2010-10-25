@@ -4,7 +4,7 @@ from django.contrib.contenttypes import generic
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import permalink
-from django.utils.translation import ugettext as
+from django.utils.translation import ugettext as _
 from django.contrib.comments.models import Comment
 
 IM_SERVICE_CHOICES = (
@@ -57,8 +57,8 @@ class Person(models.Model):
     street_address = GenericRelation('StreetAddress')
     note = GenericRelation(Comment, object_id_field='object_pk')
 	
-	date_added = models.DateTimeField(_('date added'), auto_now_add=True)
-	date_modified = models.DateTimeField(_('date modified'), auto_now=True)
+    date_added = models.DateTimeField(_('date added'), auto_now_add=True)
+    date_modified = models.DateTimeField(_('date modified'), auto_now=True)
 
     class Meta:
         db_table = 'contacts_people'

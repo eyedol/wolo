@@ -6,6 +6,9 @@ from django.db import models
 from django.db.models import permalink
 from django.utils.translation import ugettext as _
 from django.contrib.comments.models import Comment
+from django.contrib.contenttypes.generic import GenericRelation
+from django.contrib.auth.models import User
+
 
 IM_SERVICE_CHOICES = (
 	('aim', 'AIM'),
@@ -37,6 +40,52 @@ PHONE_LOCATION_CHOICES = (
 	('other', _('Other')),
 )
 
+class Company(models.Model):
+	"""Company model."""
+	name = models.CharField(_('name'), max_length=200)
+	nickname = models.CharField(_('nickname'), max_length=50, blank=True,
+		null=True)
+	slug = models.SlugField(_('slug'), max_length=50, unique=True)
+	about = models.TextField(_('about'), blank=True, null=True)
+	
+	phone_number = GenericRelation('PhoneNumber')
+	email_address = GenericRelation('EmailAddress')
+	instant_messenger = GenericRelation('InstantMessenger')
+	web_site = GenericRelation('WebSite')
+	street_address = GenericRelation('StreetAddress')
+	note = GenericRelation(Comment, object_id_field='object_pk')
+	
+	date_added = models.DateTimeField(_('date added'), auto_now_add=True)
+	date_modified = models.DateTimeField(_('date modified'), auto_now=True)
+	
+	class Meta:
+		db_table = 'contacts_companies'
+		ordering = ('name',)
+		verbose_name = _('company')
+		verbose_name_plural = _('companies')
+	
+	def __unicode__(self):
+		return u"%s" % self.name
+	
+	@permalink
+	def get_absolute_url(self):
+		return ('contacts_company_detail', None, {
+			'slug': self.slug,
+		})
+	
+	@permalink
+	def get_update_url(self):
+		return ('contacts_company_update', None, {
+			'slug': self.slug,
+		})
+	
+	@permalink
+	def get_delete_url(self):
+		return ('contacts_company_delete', None, {
+			'slug': self.slug,
+		})
+
+
 class Person(models.Model):
     """Personal information model."""
     first_name = models.CharField(_('first name'), max_length=100)
@@ -52,6 +101,7 @@ class Person(models.Model):
     web_site = GenericRelation('WebSite')
     street_address = GenericRelation('StreetAddress')
     note = GenericRelation(Comment, object_id_field='object_pk')
+	
     date_added = models.DateTimeField(_('date added'), auto_now_add=True)
     date_modified = models.DateTimeField(_('date modified'), auto_now=True)
 

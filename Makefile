@@ -19,3 +19,7 @@ local.mk:
 	@echo you must create a local.mk first. You start by copying \
 	    local.mk.default.; \
 	exit 1
+
+clean:
+	rm -f settings.py
+	rm -f *py
